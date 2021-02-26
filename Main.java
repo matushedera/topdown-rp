@@ -17,6 +17,8 @@ public class Main {
             return t3;
         } ) ).filter(t -> c.satisfies(t));
 
+        Operator Antijoin = (r1, r2, c) -> Join.apply(r1, r2, c.negate());
+
         HashMap<String, Integer> t1 = new HashMap<>();
         t1.put("A", 1);
         t1.put("B", 2);
@@ -30,8 +32,9 @@ public class Main {
         t4.put("C", 5);
         t4.put("D", 6);
 
-        //Union.apply( () -> Stream.of(t1, t2), () -> Stream.of(t3, t4), null).get().forEach(System.out::println);
+        Union.apply( () -> Stream.of(t1, t2), () -> Stream.of(t3, t4), null).get().forEach(System.out::println);
         Join.apply( () -> Stream.of(t1, t2), () -> Stream.of(t3, t4), (t) -> t.get("D")>t.get("B")).get().forEach(System.out::println);
+        Antijoin.apply( () -> Stream.of(t1, t2), () -> Stream.of(t3, t4), (t) -> t.get("D")>t.get("B")).get().forEach(System.out::println);
     }
 
 }
